@@ -18,6 +18,9 @@ providers:
   cloudflare:
     class: octodns_cloudflare.CloudflareProvider
     token: env/CLOUDFLARE_TOKEN
+    # Page Rules endpoint-ът не поддържа account-scoped API токени (само
+    # legacy Global API Key), а и не ни трябва — не ползваме URLFWD записи.
+    pagerules: false
 
 zones:
   elsys.club.:
