@@ -20,8 +20,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Validate club files
+        uses: ./.github/actions/validate
+
+      - name: Run tests
+        run: python -m pytest tests/ -q
+
       - name: Build zone
-        run: python scripts/build_zone.py
+        uses: ./.github/actions/build-zone
+
+      - name: octodns-validate (structural checks)
+        env:
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        run: octodns-validate --config-file .octodns/config.yaml
 
       - name: octodns plan (PR)
         if: github.event_name == 'pull_request'

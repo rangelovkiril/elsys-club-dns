@@ -1,0 +1,7 @@
+name: Build zone
+description: Слива clubs/*.yaml в zones/elsys.club.yaml. Изисква PyYAML.
+runs:
+  using: composite
+  steps:
+    - run: python "${{ github.action_path }}/build_zone.py"
+      shell: bash

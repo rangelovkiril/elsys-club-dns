@@ -1,0 +1,7 @@
+name: Validate clubs
+description: Политики за clubs/*.yaml — имена, позволени типове, reserved.yaml. Изисква PyYAML.
+runs:
+  using: composite
+  steps:
+    - run: python "${{ github.action_path }}/validate.py"
+      shell: bash

@@ -11,7 +11,7 @@ venv/
 # Локални тайни
 .env
 
-# Генерираната зона е build артефакт от clubs/*.yaml (scripts/build_zone.py)
+# Генерираната зона е build артефакт от clubs/*.yaml (.github/actions/build-zone)
 # и не се комитва — пази се само директорията.
 zones/*.yaml
 !zones/.gitkeep

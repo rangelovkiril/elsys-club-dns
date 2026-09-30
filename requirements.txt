@@ -1,3 +1,4 @@
 octodns==1.22.0
 octodns-cloudflare==1.2.0
 PyYAML==6.0.3
+pytest==9.1.1
