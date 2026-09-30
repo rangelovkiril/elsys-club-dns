@@ -1,0 +1,27 @@
+---
+# Основна конфигурация на OctoDNS.
+#
+# "config" (YamlProvider) е source: чете зоната от zones/elsys.club.yaml,
+# който се генерира от clubs/*.yaml чрез scripts/build_zone.py.
+#
+# "cloudflare" (CloudflareProvider) е target: реалният DNS в Cloudflare.
+# Токенът се чете от променливата на средата CLOUDFLARE_TOKEN — никога
+# не се пише в конфигурацията.
+
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./zones
+    default_ttl: 3600
+    enforce_order: false
+
+  cloudflare:
+    class: octodns_cloudflare.CloudflareProvider
+    token: env/CLOUDFLARE_TOKEN
+
+zones:
+  elsys.club.:
+    sources:
+      - config
+    targets:
+      - cloudflare

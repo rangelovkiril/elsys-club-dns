@@ -1,0 +1,28 @@
+---
+# Запазени имена, които клубовете не могат да заявяват.
+#
+# exact:    блокира точно това име (напр. "www" блокира www.elsys.club,
+#           но не и foo.www.elsys.club)
+# prefixes: блокира това име и всичко под него (напр. "admin" блокира
+#           admin.elsys.club, api.admin.elsys.club и т.н.)
+#
+# Валидацията (scripts/validate.py, Етап 4) прилага и двата списъка,
+# както и забраната клуб да носи собственото си запазено име.
+# Само maintainer-ът (CODEOWNERS) може да променя този файл.
+
+exact:
+  - "@"
+  - www
+  - mail
+  - ns1
+  - ns2
+  - mx
+  - api
+  - admin
+  - autodiscover
+  - autoconfig
+
+prefixes:
+  - elsys
+  - admin
+  - ns
