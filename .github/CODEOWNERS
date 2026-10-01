@@ -1,4 +1,6 @@
 * @rangelovkiril
 /.github/ @rangelovkiril
 
-# Последното съвпадение печели. Редовете за клубовете са точни пътища
+# Последното съвпадение печели. Редовете за клубовете са точни пътища:
+# /clubs/<клуб>.yaml @user ...
+/clubs/devops.yaml @rangelovkiril
