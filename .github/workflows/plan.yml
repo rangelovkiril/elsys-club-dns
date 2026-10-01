@@ -4,24 +4,55 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
-
-  plan:
-    needs: build
+  validate:
     runs-on: ubuntu-latest
-    environment: production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
 
-      - uses: actions/download-artifact@v4
+      - uses: ./.github/actions/validate
+
+      - uses: ./.github/actions/build-zone
+
+      # Конфигът изисква променливата, но validate не се свързва с Cloudflare.
+      - run: octodns-validate --config-file octodns.yaml
+        env:
+          CLOUDFLARE_TOKEN: unused
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: zone
+          path: zones/elsys.club.yaml
+
+  plan:
+    needs: validate
+    # Fork PR-овете не получават secrets.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    environment: plan
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: zone
           path: zones

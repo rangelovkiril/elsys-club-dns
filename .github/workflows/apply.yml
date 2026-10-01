@@ -4,28 +4,38 @@ on:
   push:
     branches: [main]
 
-jobs:
-  build:
-    uses: ./.github/workflows/build.yml
+permissions:
+  contents: read
 
+concurrency:
+  group: apply
+  cancel-in-progress: false
+
+jobs:
   apply:
-    needs: build
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: zone
-          path: zones
+      - uses: ./.github/actions/validate
 
-      - run: octodns-sync --config-file octodns.yaml --doit
+      - uses: ./.github/actions/build-zone
+
+      - name: Plan
+        run: octodns-sync --config-file octodns.yaml
+        env:
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+
+      - name: Apply
+        run: octodns-sync --config-file octodns.yaml --doit
         env:
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
