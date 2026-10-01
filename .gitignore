@@ -1,17 +1,9 @@
 # Python
 __pycache__/
 *.py[cod]
-*.egg-info/
-.pytest_cache/
 
 # Виртуални среди
 .venv/
-venv/
 
-# Локални тайни
-.env
-
-# Генерираната зона е build артефакт от clubs/*.yaml (.github/actions/build-zone)
-# и не се комитва — пази се само директорията.
-zones/*.yaml
-!zones/.gitkeep
+# Генерираната зона: в CI е артефакт, локално build-zone я пише тук.
+zones/

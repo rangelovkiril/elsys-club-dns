@@ -12,7 +12,6 @@ providers:
   config:
     class: octodns.provider.yaml.YamlProvider
     directory: ./zones
-    default_ttl: 3600
     enforce_order: false
 
   cloudflare:
