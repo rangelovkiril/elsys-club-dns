@@ -29,6 +29,9 @@ chess:
   type: CNAME
   ttl: 3600
   value: chess-club.github.io.
+  octodns:
+    cloudflare:
+      proxied: true # по избор, виж по-долу
 
 wiki.chess:
   type: A
@@ -38,6 +41,14 @@ wiki.chess:
 ```
 
 Стойностите за `CNAME` трябва да завършват с точка.
+
+### Cloudflare proxy
+
+По подразбиране записите са само DNS (без proxy на Cloudflare). В Cloudflare е включено „Always Use HTTPS“, което важи за проксираните записи. Ако искате вашият запис да минава през Cloudflare, добавете `proxied: true` под `octodns.cloudflare`, както в примера.
+
+- Работи само за `A`, `AAAA` и `CNAME`.
+- Проксираните записи ползват автоматичен TTL, затова `ttl` се игнорира.
+- Ключът трябва да е точно под `octodns:`. На друго място се игнорира тихо и записът си остава само DNS.
 
 ## Правила
 
