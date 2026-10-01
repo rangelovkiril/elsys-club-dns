@@ -10,7 +10,7 @@
 Има два начина:
 
 - **Поискайте достъп до репото** и правете промените сами — стъпките са по-долу.
-- **Или пишете на maintainer-а** ([@rangelovkiril](https://github.com/rangelovkiril)) и той ще ги направи от ваше име. Дайте му името на клуба, желания поддомейн и къде трябва да сочи (IP адрес или име).
+- **Или отворете [заявка за поддомейн](https://github.com/rangelovkiril/elsys-club-dns/issues/new?template=subdomain.yml)** и maintainer-ът ([@rangelovkiril](https://github.com/rangelovkiril)) ще направи промяната от ваше име. Във формата посочвате клуба, поддомейна, типа на записа и къде трябва да сочи.
 
 ### Ако имате достъп до repo-то
 

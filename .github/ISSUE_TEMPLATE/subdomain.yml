@@ -1,0 +1,62 @@
+name: Заявка за поддомейн
+description: Заявете нов поддомейн или промяна на запис за вашия клуб.
+title: "Поддомейн: "
+labels: ["subdomain"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Maintainer-ът ще направи промяната от ваше име. Ако имате достъп до репото, по-бързо е да направите PR - вижте README.
+
+  - type: input
+    id: club
+    attributes:
+      label: Клуб
+      description: Името на клуба - така ще се казва файлът `clubs/<клуб>.yaml`.
+      placeholder: chess
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Поддомейн
+      description: Точно името на клуба или нещо под него, без `.elsys.club`.
+      placeholder: wiki.chess
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Тип на записа
+      options:
+        - A
+        - AAAA
+        - CNAME
+        - TXT
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: Къде сочи
+      description: IP адрес (A/AAAA), име на хост с точка накрая (CNAME) или текст (TXT).
+      placeholder: chess-club.github.io.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Допълнително
+      description: За какво ще се ползва, ако не е очевидно.
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Потвърждение
+      options:
+        - label: Поддомейнът е на моя клуб и не е сред запазените имена (`reserved.yaml`).
+          required: true
