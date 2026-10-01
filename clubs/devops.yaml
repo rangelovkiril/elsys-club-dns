@@ -2,3 +2,8 @@ devops:
   type: TXT
   ttl: 3600
   value: hello
+
+ptr.devops:
+  type: PTR
+  ttl: 3600
+  value: devops.elsys.club.
