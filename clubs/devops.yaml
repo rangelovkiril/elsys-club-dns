@@ -1,4 +1,4 @@
 devops:
   type: TXT
   ttl: 3600
-  value: test
+  value: hello
