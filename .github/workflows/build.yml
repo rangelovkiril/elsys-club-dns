@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  build:
+  zone:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - uses: ./.github/actions/build-zone
 
       # Конфигът изисква променливата, но validate не се свързва с Cloudflare.
-      - run: octodns-validate --config-file .octodns/config.yaml
+      - run: octodns-validate --config-file octodns.yaml
         env:
           CLOUDFLARE_TOKEN: unused
 

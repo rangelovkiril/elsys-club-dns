@@ -26,6 +26,6 @@ jobs:
           name: zone
           path: zones
 
-      - run: octodns-sync --config-file .octodns/config.yaml --doit
+      - run: octodns-sync --config-file octodns.yaml --doit
         env:
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
