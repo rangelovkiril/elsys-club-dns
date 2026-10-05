@@ -1,5 +1,5 @@
 name: Build zone
-description: Слива clubs/*.yaml в zones/elsys.club.yaml. Изисква PyYAML.
+description: Слива root.yaml и clubs/*.yaml в zones/elsys.club.yaml. Изисква PyYAML.
 runs:
   using: composite
   steps:
