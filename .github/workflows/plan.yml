@@ -21,6 +21,10 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - run: python -m unittest discover -s tests -v
+
+      - run: node --test hosting/worker.test.mjs
+
       - uses: ./.github/actions/validate
 
       - uses: ./.github/actions/build-zone

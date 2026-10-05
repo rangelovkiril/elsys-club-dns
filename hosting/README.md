@@ -41,4 +41,6 @@ Build output contains only the approved HTML and `_worker.js`. Wrangler 4.142.0'
 
 Publishing-source settings require admin/maintainer access; configuring GitHub Pages' custom domain requires admin access. Anton currently has write access, so this one-time setup belongs to Kiril. No extra page-build workflow or Cloudflare credential is needed for branch-based GitHub Pages.
 
-The root redirect is done. Hosting directly at `elsys.club` is optional future work, not a prerequisite for the email link. It needs coordinated GitHub custom-domain/DNS changes, and this repository's current zone builder does not consume a separate apex configuration file.
+The root redirect is done. The temporary `preserve-manual-apex` OctoDNS processor leaves all apex DNS records outside reconciliation, preserving the manually created proxied A record that supports it. The original PR plan would otherwise have deleted that record; CI tests now protect this boundary.
+
+Hosting directly at `elsys.club` is optional future work, not a prerequisite for the email link. It needs coordinated GitHub custom-domain/DNS changes, and this repository's current zone builder does not consume a separate apex configuration file. When Kiril deliberately brings root DNS into this repo, he must provide a managed apex source and then remove the temporary processor together.

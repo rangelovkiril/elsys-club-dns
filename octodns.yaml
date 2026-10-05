@@ -21,9 +21,20 @@ providers:
     # legacy Global API Key), а и не ни трябва — не ползваме URLFWD записи.
     pagerules: false
 
+# Root DNS is still managed manually by Kiril and supports his redirect.
+# Exclude it from both desired and existing zones so sync cannot delete it.
+processors:
+  preserve-manual-apex:
+    class: octodns.processor.filter.NameRejectlistFilter
+    rejectlist:
+      - ''
+    include_target: true
+
 zones:
   elsys.club.:
     sources:
       - config
+    processors:
+      - preserve-manual-apex
     targets:
       - cloudflare
