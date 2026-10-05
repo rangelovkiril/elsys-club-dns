@@ -1,0 +1,5 @@
+# Temporary hosting in Anton's Cloudflare account, until GitHub Pages handoff.
+info:
+  type: CNAME
+  ttl: 300
+  value: tues-clubs-bridge.pages.dev.
