@@ -13,11 +13,13 @@
 # (конфигурация за хостинг не се приема тук). Той се поддържа през
 # Cloudflare dashboard-а, с routes elsys.club/* и www.elsys.club/*.
 #
-# 100:: е IPv6 discard prefix (RFC 6666). Записите са само котва: Workers
-# route-ове се задействат единствено върху proxied DNS запис, а Worker-ът
-# поема всяка заявка и никога не стига до този „origin“. Не може да се
-# сочи към tues-clubs-bridge.pages.dev - тогава Cloudflare би опитал да
-# проксира чужд Pages проект директно и би върнал грешка.
+# 192.0.2.1 е от TEST-NET-1 (RFC 5737), както в clubs/ai.yaml. Записите са
+# само котва: Workers route-ове се задействат единствено върху proxied DNS
+# запис, а Worker-ът поема всяка заявка и никога не стига до този „origin“.
+# Apex-ът вече стои на тази стойност (Cloudflare я създаде за Redirect
+# правилото), затова apply не го пипа - само добавя www. Не може да се сочи
+# към tues-clubs-bridge.pages.dev: тогава Cloudflare би опитал да проксира
+# чужд Pages проект директно и би върнал грешка.
 #
 # Записите са proxied, затова ttl се игнорира (README, „Cloudflare proxy“).
 # ВАЖНО: apply.yml трие всичко извън репото, затова котвите стоят тук, а не
@@ -28,15 +30,15 @@
 # (или Pages сам ги създава при закачане на custom domain).
 
 '':
-  type: AAAA
-  value: '100::'
+  type: A
+  value: 192.0.2.1
   octodns:
     cloudflare:
       proxied: true
 
 www:
-  type: AAAA
-  value: '100::'
+  type: A
+  value: 192.0.2.1
   octodns:
     cloudflare:
       proxied: true
