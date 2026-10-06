@@ -1,10 +1,42 @@
-# Записите на самия elsys.club (apex). Файлът е само за maintainer-а,
-# build_zone.py го слива с clubs/*.yaml.
+---
+# Записи, които управлява само maintainer-ът: самият elsys.club (apex) и
+# имената извън поддомейните на клубовете (www).
+# build_zone.py слива този файл с clubs/*.yaml; validate.py не го проверява.
 #
-# 192.0.2.1 е placeholder (адрес от документационния диапазон), зад който няма
-# сървър. Записът е proxied, а същинският redirect е Single Redirect Rule в
-# Cloudflare и не е част от това репо - DNS записът сам не пренасочва нищо.
+# ВРЕМЕННО: страницата на клубовете още живее в Cloudflare Pages проект в
+# чужд акаунт (tues-clubs-bridge). Apex не може да се закачи като custom
+# domain на Pages проект в друг акаунт - Cloudflare иска зоната да е в
+# същия акаунт като проекта. Затова съдържанието се сервира през Worker в
+# нашия акаунт, който проксира въпросния Pages backend.
+#
+# Worker-ът не е в това репо нарочно - вижте „Обхват на репото“ в README
+# (конфигурация за хостинг не се приема тук). Той се поддържа през
+# Cloudflare dashboard-а, с routes elsys.club/* и www.elsys.club/*.
+#
+# 192.0.2.1 е от TEST-NET-1 (RFC 5737), както в clubs/ai.yaml. Записите са
+# само котва: Workers route-ове се задействат единствено върху proxied DNS
+# запис, а Worker-ът поема всяка заявка и никога не стига до този „origin“.
+# Apex-ът вече стои на тази стойност (Cloudflare я създаде за Redirect
+# правилото), затова apply не го пипа - само добавя www. Не може да се сочи
+# към tues-clubs-bridge.pages.dev: тогава Cloudflare би опитал да проксира
+# чужд Pages проект директно и би върнал грешка.
+#
+# Записите са proxied, затова ttl се игнорира (README, „Cloudflare proxy“).
+# ВАЖНО: apply.yml трие всичко извън репото, затова котвите стоят тук, а не
+# се правят на ръка в dashboard-а.
+#
+# Когато elsys-club-site тръгне като наш Pages проект: трият се route-овете
+# и Worker-ът, а тези записи стават ALIAS/CNAME към elsys-club-site.pages.dev
+# (или Pages сам ги създава при закачане на custom domain).
+
 '':
+  type: A
+  value: 192.0.2.1
+  octodns:
+    cloudflare:
+      proxied: true
+
+www:
   type: A
   value: 192.0.2.1
   octodns:
