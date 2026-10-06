@@ -1,4 +1,7 @@
 devops:
-  type: TXT
+  type: CNAME
   ttl: 3600
-  value: hello
+  value: devops-club-site.pages.dev.
+  octodns:
+    cloudflare:
+      proxied: true
