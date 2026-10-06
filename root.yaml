@@ -1,12 +1,31 @@
-# Записите на самия elsys.club (apex). Файлът е само за maintainer-а,
-# build_zone.py го слива с clubs/*.yaml.
+---
+# Записи, които управлява само maintainer-ът: самият elsys.club (apex) и
+# имената извън поддомейните на клубовете (www).
+# build_zone.py слива този файл с clubs/*.yaml; validate.py не го проверява.
 #
-# 192.0.2.1 е placeholder (адрес от документационния диапазон), зад който няма
-# сървър. Записът е proxied, а същинският redirect е Single Redirect Rule в
-# Cloudflare и не е част от това репо - DNS записът сам не пренасочва нищо.
+# elsys.club и www.elsys.club сочат към Cloudflare Pages проекта на общата
+# страница на клубовете: https://github.com/rangelovkiril/elsys-club-site
+# Това репо пак не хоства нищо - вижте „Обхват на репото“ в README.
+#
+# CNAME е забранен на apex (RFC 1034 §3.6.2: CNAME изключва всякакви други
+# данни на възела, а apex-ът задължително има SOA и NS). ALIAS е типът на
+# octodns за това: octodns-cloudflare го записва като root CNAME, а
+# Cloudflare го "flatten-ва" - сам разрешава целта и отговаря с адреси.
+#
+# Записите са proxied, затова ttl се игнорира (README, „Cloudflare proxy“).
+# ВАЖНО: Cloudflare Pages сам създава тези записи при закачане на custom
+# domain. Тук са описани, защото apply.yml трие всичко извън репото.
+
 '':
-  type: A
-  value: 192.0.2.1
+  type: ALIAS
+  value: elsys-club-site.pages.dev.
+  octodns:
+    cloudflare:
+      proxied: true
+
+www:
+  type: CNAME
+  value: elsys-club-site.pages.dev.
   octodns:
     cloudflare:
       proxied: true
